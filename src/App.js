@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
-function App() {
+function Node({ value, next }) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section>
+      <p>Value: {value}</p>
+      {next && <Node {...next} />}
+    </section>
   );
 }
 
-export default App;
+function LinkedList() {
+  const [head, setHead] = useState(null);
+
+  function addNode(value) {
+    const node = { value, next: head };
+    setHead(node);
+  }
+
+  function clearList() {
+    setHead(null);
+  }
+
+  return (
+    <main>
+      <h1>Basic Linked List</h1>
+      <section className="btnFunctions">
+        <button onClick={() => addNode(Math.floor(Math.random() * 100))}>
+          Add Node
+        </button>
+        <button onClick={() => clearList()}>Clear List</button>
+      </section>
+      {head && <Node {...head} />}
+    </main>
+  );
+}
+
+export default LinkedList;
